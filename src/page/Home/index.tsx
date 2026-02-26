@@ -1,6 +1,12 @@
+import { Button } from 'antd';
+import './index.scss';
+
 function Home(){
   return (
-    <div>Home Page</div>
+    <div className='home'>
+      <Button type="primary">Primary Button</Button>
+      <div className="red">Home Page</div>
+    </div>
   )
 }
 
