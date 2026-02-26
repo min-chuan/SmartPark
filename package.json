@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "antd": "^6.3.1",
+    "axios": "^1.13.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^6.30.3"
@@ -33,6 +34,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
+    "mockjs": "^1.1.0",
     "prettier": "^3.8.1",
     "sass": "^1.97.3",
     "typescript": "~5.9.3",
