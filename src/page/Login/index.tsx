@@ -2,12 +2,15 @@ import { login } from '@/api/users';
 import bg from '@/assets/bg.jpg';
 import lgbg from '@/assets/lgbg.jpg';
 import logo from '@/assets/logo.png';
+import { setToken } from '@/store/login/authSlice';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
+import { useDispatch } from 'react-redux';
 import './index.scss';
 
 function Login() {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   function handleLogin() {
     form
@@ -16,7 +19,8 @@ function Login() {
         return login(values);
       })
       .then(res => {
-        console.log(res);
+        const { token } = res.data;
+        dispatch(setToken(token));
       })
       .catch(err => {
         console.log(err);
