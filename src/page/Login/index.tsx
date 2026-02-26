@@ -1,9 +1,10 @@
+import { login } from '@/api/users';
 import bg from '@/assets/bg.jpg';
 import lgbg from '@/assets/lgbg.jpg';
 import logo from '@/assets/logo.png';
-import './index.scss';
-import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input } from 'antd';
+import './index.scss';
 
 function Login() {
   const [form] = Form.useForm();
@@ -12,7 +13,10 @@ function Login() {
     form
       .validateFields()
       .then(values => {
-        console.log(values);
+        return login(values);
+      })
+      .then(res => {
+        console.log(res);
       })
       .catch(err => {
         console.log(err);

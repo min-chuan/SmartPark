@@ -41,3 +41,4 @@ commitlint.config.js text eol=lf
 tsconfig*.json text eol=lf
 package*.json text eol=lf
 vite.config.* text eol=lf
+.env text eol=lf
