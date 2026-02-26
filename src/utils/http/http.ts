@@ -1,3 +1,4 @@
+import { store } from '@/store';
 import { message } from 'antd';
 import axios from 'axios';
 
@@ -9,6 +10,11 @@ const http = axios.create({
 // 添加请求拦截器
 http.interceptors.request.use(
   function (config) {
+    // 请求头中添加 token
+    const { token } = store.getState().auth;
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
     // 在发送请求之前做些什么
     return config;
   },
@@ -21,12 +27,12 @@ http.interceptors.request.use(
 // 添加响应拦截器
 http.interceptors.response.use(
   function (response) {
+    // 2xx 范围内的状态码都会触发该函数。
+    // 处理请求失败情况
     if (response.data && response.data.code !== 200) {
       message.error(`${response.data.code}:${response.data.message || '请求失败'}`);
       return Promise.reject(new Error(response.data.message || '请求失败'));
     }
-    // 2xx 范围内的状态码都会触发该函数。
-    // 对响应数据做点什么
     return response.data;
   },
   function (error) {
