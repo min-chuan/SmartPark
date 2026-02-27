@@ -1,4 +1,4 @@
-import { post } from '@/utils/http/request';
+import { get, post } from '@/utils/http/request';
 
 interface LoginData {
   username: string;
@@ -7,4 +7,8 @@ interface LoginData {
 
 export function login(data: LoginData) {
   return post('/login', data);
+}
+
+export function getMenu() {
+  return get('/menu');
 }

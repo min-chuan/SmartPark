@@ -5,10 +5,14 @@ import logo from '@/assets/logo.png';
 import { setToken } from '@/store/login/authSlice';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import './index.scss';
 
 function Login() {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -16,13 +20,17 @@ function Login() {
     form
       .validateFields()
       .then(values => {
+        setLoading(true);
         return login(values);
       })
       .then(res => {
+        setLoading(false);
         const { token } = res.data;
         dispatch(setToken(token));
+        navigate('/', { replace: true });
       })
       .catch(err => {
+        setLoading(false);
         console.log(err);
       });
   }
@@ -48,6 +56,7 @@ function Login() {
                 style={{ width: '100%' }}
                 type="primary"
                 htmlType="submit"
+                loading={loading}
               >
                 登录
               </Button>
