@@ -2,7 +2,7 @@ import MyBreadcrumb from '@/components/myBreadcrumb';
 import MyHeader from '@/components/myHeader';
 import NavLeft from '@/components/navLeft';
 import { Layout, theme } from 'antd';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -39,7 +39,9 @@ const Home: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Outlet />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Outlet />
+            </Suspense>
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

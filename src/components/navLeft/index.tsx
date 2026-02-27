@@ -1,36 +1,23 @@
-import type { MenuItem as MenuItemFromAPI } from '@/api/users';
 import logo from '@/assets/logo.png';
+import type { RootState } from '@/store';
 import type { MenuInfo } from '@rc-component/menu/lib/interface';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getMenu } from '../../api/users';
-import { setMenuList } from '../../store/login/authSlice';
 import icons from './iconList';
 import './index.scss';
 
+import type { MenuItem as MenuItemFromAPI } from '@/api/users';
 type MenuItem = Required<MenuProps>['items'][number];
 
 function NavLeft() {
-  const [menuData, setMenuData] = useState<MenuItem[]>([]);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const menuList = useSelector((state: RootState) => state.auth.menuList);
 
-  function getMenuData() {
-    getMenu()
-      .then(res => {
-        // 转换 API 数据为 antd Menu 需要的格式
-        if (res.data) {
-          const transformedData = transformMenuData(res.data);
-          dispatch(setMenuList(res.data));
-          setMenuData(transformedData);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-      });
+  function handleClick(info: MenuInfo) {
+    navigate(info.key);
   }
 
   function transformMenuData(data: MenuItemFromAPI[]): MenuItem[] {
@@ -42,13 +29,9 @@ function NavLeft() {
     }));
   }
 
-  function handleClick(info: MenuInfo) {
-    navigate(info.key);
-  }
-
-  useEffect(() => {
-    getMenuData();
-  }, []);
+  const menuData = useMemo(() => {
+    return transformMenuData(menuList);
+  }, [menuList]);
 
   return (
     <div className="navleft">
