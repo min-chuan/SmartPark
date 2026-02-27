@@ -25,8 +25,9 @@ function Login() {
       })
       .then(res => {
         setLoading(false);
-        const { token } = res.data;
+        const { token, username } = res.data;
         dispatch(setToken(token));
+        sessionStorage.setItem('username', username);
         navigate('/', { replace: true });
       })
       .catch(err => {
@@ -43,7 +44,7 @@ function Login() {
             <img className="logo" src={logo} width={100} alt="logo" />
             <h1>朋远智慧园区管理平台</h1>
           </div>
-          <Form name="basic" form={form} className="login-form">
+          <Form name="basic" form={form} className="login-form" autoComplete="off">
             <Form.Item name="username" rules={[{ required: true, message: '用户名不能为空' }]}>
               <Input prefix={<UserOutlined />} placeholder="请输入您的用户名" />
             </Form.Item>

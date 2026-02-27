@@ -18,7 +18,14 @@ const Home: React.FC = () => {
         <NavLeft />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header
+          style={{
+            padding: 0,
+            background: colorBgContainer,
+            textAlign: 'right',
+            paddingRight: '20px',
+          }}
+        >
           <MyHeader />
         </Header>
         <Content style={{ margin: '0 16px' }}>
