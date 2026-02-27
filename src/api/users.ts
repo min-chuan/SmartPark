@@ -1,3 +1,4 @@
+import type { ApiResponse } from '@/utils/http/request';
 import { get, post } from '@/utils/http/request';
 
 interface LoginData {
@@ -5,10 +6,18 @@ interface LoginData {
   password: string;
 }
 
+// API 返回的菜单项数据结构
+export interface MenuItem {
+  icon?: string;
+  label: string;
+  key: string;
+  children?: MenuItem[];
+}
+
 export function login(data: LoginData) {
   return post('/login', data);
 }
 
-export function getMenu() {
+export function getMenu(): Promise<ApiResponse<MenuItem[]>> {
   return get('/menu');
 }

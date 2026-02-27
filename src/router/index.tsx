@@ -1,11 +1,11 @@
 import RequireAuth from '@/utils/RequireAuth';
 import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 const Home = React.lazy(() => import('@/page/home'));
 const Login = React.lazy(() => import('@/page/login'));
 const NotFound = React.lazy(() => import('@/page/notFound'));
 
-const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   {
     path: '/',
     element: (
@@ -26,6 +26,4 @@ const router = createBrowserRouter([
     path: '*',
     element: <NotFound />,
   },
-]);
-
-export default router;
+];

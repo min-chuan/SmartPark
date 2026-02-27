@@ -3,6 +3,7 @@ import MyHeader from '@/components/myHeader';
 import NavLeft from '@/components/navLeft';
 import { Layout, theme } from 'antd';
 import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -38,7 +39,7 @@ const Home: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            Bill is a cat.
+            <Outlet />
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

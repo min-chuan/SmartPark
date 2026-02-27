@@ -1,23 +1,22 @@
+import type { MenuItem as MenuItemFromAPI } from '@/api/users';
 import logo from '@/assets/logo.png';
+import type { MenuInfo } from '@rc-component/menu/lib/interface';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { getMenu } from '../../api/users';
+import { setMenuList } from '../../store/login/authSlice';
 import icons from './iconList';
 import './index.scss';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-// API 返回的菜单项数据结构
-interface MenuItemFromAPI {
-  icon?: string;
-  label: string;
-  key: string;
-  children?: MenuItemFromAPI[];
-}
-
 function NavLeft() {
   const [menuData, setMenuData] = useState<MenuItem[]>([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function getMenuData() {
     getMenu()
@@ -25,6 +24,7 @@ function NavLeft() {
         // 转换 API 数据为 antd Menu 需要的格式
         if (res.data) {
           const transformedData = transformMenuData(res.data);
+          dispatch(setMenuList(res.data));
           setMenuData(transformedData);
         }
       })
@@ -40,6 +40,10 @@ function NavLeft() {
       icon: item.icon ? icons[item.icon] : null,
       children: item.children ? transformMenuData(item.children) : undefined,
     }));
+  }
+
+  function handleClick(info: MenuInfo) {
+    navigate(info.key);
   }
 
   useEffect(() => {
@@ -58,6 +62,7 @@ function NavLeft() {
         mode="inline"
         theme="dark"
         items={menuData}
+        onClick={handleClick}
       />
     </div>
   );

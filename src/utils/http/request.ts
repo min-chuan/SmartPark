@@ -1,9 +1,9 @@
 import http from './http';
 
-interface ApiResponse {
+export interface ApiResponse<T = any> {
   code: number;
   message: string;
-  data?: any;
+  data?: T;
 }
 
 export function get(url: string, params?: any): Promise<ApiResponse> {
