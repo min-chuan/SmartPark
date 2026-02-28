@@ -61,6 +61,7 @@ function NavLeft() {
       <Menu
         defaultSelectedKeys={selected.selectedKeys}
         defaultOpenKeys={selected.openKeys}
+        selectedKeys={selected.selectedKeys}
         mode="inline"
         theme="dark"
         items={menuData}
