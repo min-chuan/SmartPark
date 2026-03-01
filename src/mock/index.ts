@@ -12,44 +12,6 @@ Mock.Random.extend({
   },
 });
 
-// 登录接口
-Mock.mock(`${baseURL}/login`, 'post', options => {
-  const { username, password } = JSON.parse(options.body);
-  if (username === 'admin' && password === 'admin123456') {
-    return {
-      code: 200,
-      message: '登录成功',
-      data: {
-        username: 'admin',
-        token: 'mocktokenadmin123456',
-      },
-    };
-  } else if (username === 'manager' && password === 'manager123456') {
-    return {
-      code: 200,
-      message: '登录成功',
-      data: {
-        username: 'manager',
-        token: 'mocktokenmanager123456',
-      },
-    };
-  } else if (username === 'user' && password === 'user123456') {
-    return {
-      code: 200,
-      message: '登录成功',
-      data: {
-        username: 'user',
-        token: 'mocktokenuser123456',
-      },
-    };
-  } else {
-    return {
-      code: 401,
-      message: '用户名或密码错误',
-    };
-  }
-});
-
 const adminMenuList = [
   {
     icon: 'DashboardOutlined',
@@ -366,7 +328,47 @@ Mock.mock(`${baseURL}/menu`, 'get', () => {
   }
 });
 
-// 图标接口
+/* -----------------  登录接口 ---------------------*/
+// 登录接口
+Mock.mock(`${baseURL}/login`, 'post', options => {
+  const { username, password } = JSON.parse(options.body);
+  if (username === 'admin' && password === 'admin123456') {
+    return {
+      code: 200,
+      message: '登录成功',
+      data: {
+        username: 'admin',
+        token: 'mocktokenadmin123456',
+      },
+    };
+  } else if (username === 'manager' && password === 'manager123456') {
+    return {
+      code: 200,
+      message: '登录成功',
+      data: {
+        username: 'manager',
+        token: 'mocktokenmanager123456',
+      },
+    };
+  } else if (username === 'user' && password === 'user123456') {
+    return {
+      code: 200,
+      message: '登录成功',
+      data: {
+        username: 'user',
+        token: 'mocktokenuser123456',
+      },
+    };
+  } else {
+    return {
+      code: 401,
+      message: '用户名或密码错误',
+    };
+  }
+});
+
+/* -----------------  工作台接口 ---------------------*/
+// 图表接口
 Mock.mock(`${baseURL}/energyData`, 'get', () => {
   return {
     code: 200,
@@ -396,7 +398,7 @@ Mock.mock(`${baseURL}/energyData`, 'get', () => {
   };
 });
 
-// 租户列表接口
+/* -----------------  租户列表接口 ---------------------*/
 // 获取租户列表
 Mock.mock(`${baseURL}/userList`, 'post', options => {
   const { page, pageSize, company, contact, tel } = JSON.parse(options.body);
@@ -454,5 +456,34 @@ Mock.mock(`${baseURL}/editUser`, 'post', options => {
     code: 200,
     message: '成功',
     data: '操作成功',
+  };
+});
+
+/* -----------------  房间管理接口 ---------------------*/
+function generateRooms() {
+  const rooms = [];
+  for (let i = 0; i < 50; i++) {
+    const floor = 1 + Math.floor(i / 6);
+    const roomNumber = floor * 100 + (101 + (i % 6));
+    rooms.push({
+      roomNumber,
+      decorationType: Mock.Random.pick(['毛坯', '精装']),
+      area: Mock.Random.integer(70, 300),
+      unitPrice: Mock.Random.integer(1, 3),
+      src: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    });
+  }
+  return rooms;
+}
+// 获取房间列表
+Mock.mock(`${baseURL}/getRoomList`, 'post', options => {
+  const data = JSON.parse(options.body);
+  console.log('获取房间列表参数:', data);
+  return {
+    code: 200,
+    message: '成功',
+    data: {
+      rooms: generateRooms(),
+    },
   };
 });
