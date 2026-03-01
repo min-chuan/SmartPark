@@ -5,6 +5,13 @@ Mock.setup({
   timeout: '200-600', // 模拟网络延迟
 });
 
+Mock.Random.extend({
+  phone: function () {
+    const prefixs = ['13', '14', '15', '16', '17', '18', '19'];
+    return this.pick(prefixs) + Mock.mock(/\d{9}/);
+  },
+});
+
 // 登录接口
 Mock.mock(`${baseURL}/login`, 'post', options => {
   const { username, password } = JSON.parse(options.body);
@@ -386,5 +393,66 @@ Mock.mock(`${baseURL}/energyData`, 'get', () => {
         data: [820, 932, 901, 934, 1290, 1330, 1320],
       },
     ],
+  };
+});
+
+// 租户列表接口
+// 获取租户列表
+Mock.mock(`${baseURL}/userList`, 'post', options => {
+  const { page, pageSize, company, contact, tel } = JSON.parse(options.body);
+  console.log('获取租户列表参数:', page, pageSize, company, contact, tel);
+  return {
+    code: 200,
+    message: '请求成功',
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          id: "@string('number', 6)",
+          name: '@cname',
+          'status|1': ['1', '2', '3'],
+          tel: '@phone',
+          email: '@email',
+          'business|1': ['制造业', '互联网', '新媒体', '美业', '新能源', '物流', '电商'],
+          creditCode: "@string('number', 18)",
+          industryNum: "@string('number', 15)",
+          organizationCode: "@string('upper',9)",
+          legalPerson: '@cname',
+        },
+      ],
+      total: 78,
+    }),
+  };
+});
+
+// 删除租户
+Mock.mock(`${baseURL}/deleteUser`, 'post', options => {
+  const { id } = JSON.parse(options.body);
+  console.log('删除租户参数:', id);
+  return {
+    code: 200,
+    message: '成功',
+    data: '删除成功',
+  };
+});
+
+// 批量删除租户
+Mock.mock(`${baseURL}/batchDeleteUser`, 'post', options => {
+  const { ids } = JSON.parse(options.body);
+  console.log('批量删除租户参数:', ids);
+  return {
+    code: 200,
+    message: '成功',
+    data: '删除成功',
+  };
+});
+
+// 编辑添加租户
+Mock.mock(`${baseURL}/editUser`, 'post', options => {
+  const data = JSON.parse(options.body);
+  console.log('编辑添加租户参数:', data);
+  return {
+    code: 200,
+    message: '成功',
+    data: '操作成功',
   };
 });

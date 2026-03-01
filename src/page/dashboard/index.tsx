@@ -15,25 +15,33 @@ import './index.scss';
 function Dashboard() {
   const initialEnergyOption: EChartsOption = option;
   const [energyOption, setEnergyOption] = useState<EChartsOption>(initialEnergyOption);
+
   useEffect(() => {
-    getEnergyData().then(res => {
-      if (res.data) {
-        const updateEnergyOption = {
-          ...energyOption,
-          legend: {
-            ...energyOption.legend,
-            data: res.data.map(item => item.name),
-          },
-          series: res.data.map(item => ({
-            ...item,
-            type: 'line',
-            stack: 'Total',
-          })),
-        };
-        setEnergyOption(updateEnergyOption);
+    const loadEnergyData = async () => {
+      try {
+        const res = await getEnergyData();
+        if (res.data) {
+          const updateEnergyOption = {
+            ...energyOption,
+            legend: {
+              ...energyOption.legend,
+              data: res.data.map(item => item.name),
+            },
+            series: res.data.map(item => ({
+              ...item,
+              type: 'line',
+              stack: 'Total',
+            })),
+          };
+          setEnergyOption(updateEnergyOption);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    });
+    };
+    loadEnergyData();
   }, []);
+
   return (
     <div className="dashboard">
       <Row gutter={16}>
@@ -102,7 +110,7 @@ function Dashboard() {
         </Col>
         <Col span={6}>
           <Card title="充电桩空闲统计">
-            <div className="wrap text-center">
+            <div className="wrap tc">
               <Progress type="circle" percent={75} className="mt" />
               <Statistic title="总充电桩数" value={75} suffix="/ 100" />
             </div>

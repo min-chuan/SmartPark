@@ -4,6 +4,7 @@ import NavLeft from '@/components/navLeft';
 import { Layout, theme } from 'antd';
 import React, { Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import './index.scss';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -29,7 +30,7 @@ const Home: React.FC = () => {
         >
           <MyHeader />
         </Header>
-        <Content style={{ margin: '0 16px' }}>
+        <Content className="content">
           <MyBreadcrumb />
           <div
             style={{

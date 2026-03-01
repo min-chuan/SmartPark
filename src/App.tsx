@@ -20,8 +20,9 @@ function App() {
       }, 0);
       return;
     }
-    getMenu()
-      .then(res => {
+    const loadMenu = async () => {
+      try {
+        const res = await getMenu();
         if (res.data) {
           const menuList = res.data;
           dispatch(setMenuList(menuList));
@@ -39,10 +40,11 @@ function App() {
           const newRouter = createBrowserRouter(newRoutes);
           setRouter(newRouter);
         }
-      })
-      .catch(err => {
-        console.error(err);
-      });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    loadMenu();
   }, [token]);
 
   if (!router) {
