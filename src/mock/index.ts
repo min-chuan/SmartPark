@@ -518,3 +518,35 @@ Mock.mock(`${baseURL}/getContractList`, 'post', options => {
     }),
   };
 });
+
+/* -----------------  账单管理接口 ---------------------*/
+// 获取账单列表
+Mock.mock(`${baseURL}/getBillList`, 'post', options => {
+  const data = JSON.parse(options.body);
+  const { pageSize } = data;
+  console.log('获取账单列表请求参数:', data);
+  return {
+    code: 200,
+    message: '成功',
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          accountNo: '@string("number", 6)',
+          'status|1': ['1', '2'],
+          'roomNo|1': ['A1幢写字楼-201', 'B1幢写字楼-402', 'B2幢写字楼-701', 'C2幢写字楼-1601'],
+          'carNo|1': ['B109', 'C227', 'C106', 'D158'],
+          'tel|1': ['@phone'],
+          'costName1|1': [1278, 2633, 3698],
+          costName2: '200元/月',
+          'costName3|1': ['25800/年', '19800/年'],
+          startDate: '2023-01-01',
+          endDate: '2024-01-01',
+          preferential: 0,
+          money: 26000,
+          'pay|1': ['微信', '支付宝', '现金', '银行卡转账'],
+        },
+      ],
+      total: 54,
+    }),
+  };
+});
