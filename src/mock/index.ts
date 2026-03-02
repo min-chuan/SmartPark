@@ -76,6 +76,7 @@ const adminMenuList = [
         icon: 'FrownOutlined',
         label: '合同详情',
         key: '/finance/surrender',
+        disabled: true,
       },
       {
         icon: 'FileTextOutlined',
@@ -331,7 +332,9 @@ Mock.mock(`${baseURL}/menu`, 'get', () => {
 /* -----------------  登录接口 ---------------------*/
 // 登录接口
 Mock.mock(`${baseURL}/login`, 'post', options => {
-  const { username, password } = JSON.parse(options.body);
+  const data = JSON.parse(options.body);
+  const { username, password } = data;
+  console.log('登录接口请求参数', data);
   if (username === 'admin' && password === 'admin123456') {
     return {
       code: 200,
@@ -369,7 +372,7 @@ Mock.mock(`${baseURL}/login`, 'post', options => {
 
 /* -----------------  工作台接口 ---------------------*/
 // 图表接口
-Mock.mock(`${baseURL}/energyData`, 'get', () => {
+Mock.mock(`${baseURL}/getEnergyList`, 'get', () => {
   return {
     code: 200,
     message: '请求成功',
@@ -401,8 +404,9 @@ Mock.mock(`${baseURL}/energyData`, 'get', () => {
 /* -----------------  租户列表接口 ---------------------*/
 // 获取租户列表
 Mock.mock(`${baseURL}/userList`, 'post', options => {
-  const { page, pageSize, company, contact, tel } = JSON.parse(options.body);
-  console.log('获取租户列表参数:', page, pageSize, company, contact, tel);
+  const data = JSON.parse(options.body);
+  const { pageSize } = data;
+  console.log('获取租户列表请求参数:', data);
   return {
     code: 200,
     message: '请求成功',
@@ -428,8 +432,8 @@ Mock.mock(`${baseURL}/userList`, 'post', options => {
 
 // 删除租户
 Mock.mock(`${baseURL}/deleteUser`, 'post', options => {
-  const { id } = JSON.parse(options.body);
-  console.log('删除租户参数:', id);
+  const data = JSON.parse(options.body);
+  console.log('删除租户请求参数:', data);
   return {
     code: 200,
     message: '成功',
@@ -439,8 +443,8 @@ Mock.mock(`${baseURL}/deleteUser`, 'post', options => {
 
 // 批量删除租户
 Mock.mock(`${baseURL}/batchDeleteUser`, 'post', options => {
-  const { ids } = JSON.parse(options.body);
-  console.log('批量删除租户参数:', ids);
+  const data = JSON.parse(options.body);
+  console.log('批量删除租户请求参数:', data);
   return {
     code: 200,
     message: '成功',
@@ -451,7 +455,7 @@ Mock.mock(`${baseURL}/batchDeleteUser`, 'post', options => {
 // 编辑添加租户
 Mock.mock(`${baseURL}/editUser`, 'post', options => {
   const data = JSON.parse(options.body);
-  console.log('编辑添加租户参数:', data);
+  console.log('编辑添加租户请求参数:', data);
   return {
     code: 200,
     message: '成功',
@@ -478,12 +482,39 @@ function generateRooms() {
 // 获取房间列表
 Mock.mock(`${baseURL}/getRoomList`, 'post', options => {
   const data = JSON.parse(options.body);
-  console.log('获取房间列表参数:', data);
+  console.log('获取房间列表请求参数:', data);
   return {
     code: 200,
     message: '成功',
     data: {
       rooms: generateRooms(),
     },
+  };
+});
+
+/* -----------------  合同管理接口 ---------------------*/
+// 获取合同列表
+Mock.mock(`${baseURL}/getContractList`, 'post', options => {
+  const data = JSON.parse(options.body);
+  const { pageSize } = data;
+  console.log('获取合同列表请求参数:', data);
+  return {
+    code: 200,
+    message: '成功',
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          contractNo: '@string("number", 6)',
+          'type|1': ['租赁合同', '自定义合同', '购买合同'],
+          'name|1': ['房屋租赁合同通用模板', '车位租赁合同通用模板', '商业房产买卖合同'],
+          'startDate|1': ['2023-01-01', '2023-03-05', '2023-04-01'],
+          'endDate|1': ['2024-01-01', '2024-03-05', '2024-04-01'],
+          'jia|1': ['万物科技有限公司', '大鱼网络科技', '六六信息技术有限公司'],
+          yi: '天明物业有限公司',
+          'status|1': ['1', '2', '3'],
+        },
+      ],
+      total: 54,
+    }),
   };
 });

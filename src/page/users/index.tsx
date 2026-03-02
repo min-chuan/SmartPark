@@ -17,19 +17,18 @@ import {
   batchDeleteUser,
   deleteUser,
   getUserList,
-  type SearchType,
+  type GetUserListRequest,
   type UserData,
 } from '../../api/userList';
 import { clearUserData, setUserData } from '../../store/user/userSlice';
 import UserForm from './userForm';
 
-const initialForm: FormType = {
+type SearchType = Omit<GetUserListRequest, 'page' | 'pageSize'>;
+const initialForm: SearchType = {
   company: '',
   contact: '',
   tel: '',
 };
-
-type FormType = Required<Omit<SearchType, 'page' | 'pageSize'>>;
 
 function Users() {
   const [selected, setSelected] = useState<React.Key[]>([]);
@@ -38,7 +37,7 @@ function Users() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
-  const [form, setForm] = useState<FormType>(initialForm);
+  const [form, setForm] = useState<SearchType>(initialForm);
   const [modalTitle, setModalTitle] = useState<string>('新增客户');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -180,11 +179,27 @@ function Users() {
     loadData(page, pageSize);
   };
 
+  const handleReset = () => {
+    setSelected([]);
+    setForm(initialForm);
+    setPage(1);
+    setPageSize(10);
+    loadData(1, 10, initialForm);
+  };
+
   const loadData = useCallback(
-    async (currentPage: number = page, currentPageSize: number = pageSize) => {
+    async (
+      currentPage: number = page,
+      currentPageSize: number = pageSize,
+      currentForm: SearchType = form
+    ) => {
       setLoading(true);
       try {
-        const res = await getUserList({ ...form, page: currentPage, pageSize: currentPageSize });
+        const res = await getUserList({
+          ...currentForm,
+          page: currentPage,
+          pageSize: currentPageSize,
+        });
         setLoading(false);
         setSelected([]);
         if (res.data) {
@@ -200,14 +215,6 @@ function Users() {
     },
     [page, pageSize, form]
   );
-
-  const reset = () => {
-    setSelected([]);
-    setForm(initialForm);
-    setPage(1);
-    setPageSize(10);
-    loadData(1, 10);
-  };
 
   useEffect(() => {
     loadData();
@@ -244,7 +251,7 @@ function Users() {
             <Button type="primary" className="mr" onClick={() => loadData()}>
               查询
             </Button>
-            <Button onClick={reset}>重置</Button>
+            <Button onClick={handleReset}>重置</Button>
           </Col>
         </Row>
       </Card>
@@ -256,7 +263,7 @@ function Users() {
           批量删除
         </Button>
       </Card>
-      <Card className="clearfix">
+      <Card className="clearfix mt">
         <Table
           columns={columns}
           dataSource={userList}

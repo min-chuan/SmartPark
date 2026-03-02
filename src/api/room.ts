@@ -1,6 +1,6 @@
 import { type ApiResponse, post } from '../utils/http/request';
 
-export interface RoomType {
+export interface RoomData {
   roomNumber: number;
   decorationType: '毛坯' | '精装';
   area: number;
@@ -8,6 +8,6 @@ export interface RoomType {
   src: string;
 }
 
-export function getRoomList(data: { roomId: string }): Promise<ApiResponse<{ rooms: RoomType[] }>> {
+export function getRoomList(data: { roomId: string }): Promise<ApiResponse<{ rooms: RoomData[] }>> {
   return post('/getRoomList', data);
 }

@@ -11,6 +11,7 @@ export interface MenuItem {
   icon?: string;
   label: string;
   key: string;
+  disabled?: boolean;
   children?: MenuItem[];
 }
 

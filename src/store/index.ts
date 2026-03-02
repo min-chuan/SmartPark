@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import contractReducer from './finance/contractSlice';
 import authReducer from './login/authSlice';
 import userReducer from './user/userSlice';
 
@@ -6,6 +7,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
+    contract: contractReducer,
   },
 });
 

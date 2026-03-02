@@ -1,14 +1,14 @@
 import roomPic from '@/assets/roomPic.jpg';
 import { Card, Col, Image, Radio, Row, Spin, type RadioChangeEvent } from 'antd';
 import { useEffect, useState } from 'react';
-import { getRoomList, type RoomType } from '../../api/room';
+import { getRoomList, type RoomData } from '../../api/room';
 import './index.scss';
 
 function Room() {
   const [open, setOpen] = useState(false);
   const [roomId, setRoomId] = useState('a1');
   const [imageUrl, setImageUrl] = useState<string>(roomPic);
-  const [rooms, setRooms] = useState<RoomType[]>([]);
+  const [rooms, setRooms] = useState<RoomData[]>([]);
   const [loading, setLoading] = useState(false);
   const handleOpen = (src: string) => {
     // 写死图片

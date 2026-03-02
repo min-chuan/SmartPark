@@ -8,7 +8,7 @@ import { Card, Col, Progress, Row, Statistic, Timeline } from 'antd';
 import type { EChartsOption } from 'echarts-for-react';
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from 'react';
-import { getEnergyData } from '../../api/dashboard';
+import { getEnergyList } from '../../api/dashboard';
 import { items, option, option2, option3 } from './echartsData';
 import './index.scss';
 
@@ -19,7 +19,7 @@ function Dashboard() {
   useEffect(() => {
     const loadEnergyData = async () => {
       try {
-        const res = await getEnergyData();
+        const res = await getEnergyList();
         if (res.data) {
           const updateEnergyOption = {
             ...energyOption,

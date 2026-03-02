@@ -23,8 +23,7 @@ function NavLeft() {
 
   function transformMenuData(data: MenuItemFromAPI[]): MenuItem[] {
     return data.map(item => ({
-      key: item.key,
-      label: item.label,
+      ...item,
       icon: item.icon ? icons[item.icon] : null,
       children: item.children ? transformMenuData(item.children) : undefined,
     }));
