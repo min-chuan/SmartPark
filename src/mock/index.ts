@@ -550,3 +550,43 @@ Mock.mock(`${baseURL}/getBillList`, 'post', options => {
     }),
   };
 });
+
+/* -----------------  设备管理接口 ---------------------*/
+//设备管理
+Mock.mock(`${baseURL}/getEquipmentList`, 'post', (options: any) => {
+  const res = JSON.parse(options.body);
+  const { pageSize } = res;
+  console.log('设备管理请求参数', res);
+  return {
+    code: 200,
+    message: '成功',
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          'id|+1': 1001,
+          'name|1': [
+            '智能供水机组',
+            'A1幢写字楼供暖设备',
+            '园区大门入口闸机',
+            '球机摄像头',
+            'C1幢写字楼中央空调',
+            'B区充电桩',
+            'B2 - 21 - 电梯',
+            '路灯设备1',
+          ],
+          'no|1': ['CP - ONYU - 1098', 'H876 - 09', 'CDU - B09 - 21'], //设备编号
+          person: '@cname', //负责人
+          'tel|1': ['@phone'], //负责人电话
+          time: ['20年', '15年', '10年'], //理论寿命
+          rest: '7年', //剩余寿命
+          'status|1': [1, 2, 3], //1使用中 2维护中 3以损坏
+          last: ['2023 - 11 - 11', '2024 - 05 - 06'], //最近保养日期
+          'type|1': ['型号1', '型号2', '型号3'], //规格型号
+          'from|1': ['上海科技股份有限公司', '武汉能源设备有限公司', '重庆某某照明有限公司'], //生产厂家
+        },
+      ],
+      total: 66,
+    }),
+    // 生成66条数据
+  };
+});
