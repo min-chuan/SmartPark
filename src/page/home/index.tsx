@@ -1,7 +1,7 @@
 import MyBreadcrumb from '@/components/myBreadcrumb';
 import MyHeader from '@/components/myHeader';
 import NavLeft from '@/components/navLeft';
-import { Layout, theme } from 'antd';
+import { Layout, Spin, theme } from 'antd';
 import React, { Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import './index.scss';
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
         </Header>
         <Content className="content">
           <MyBreadcrumb />
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spin> </Spin>}>
             <Outlet />
           </Suspense>
         </Content>

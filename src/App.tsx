@@ -2,6 +2,7 @@ import { getMenu } from '@/api/users';
 import { routes } from '@/router';
 import { setMenuList } from '@/store/login/authSlice';
 import type { Router } from '@remix-run/router';
+import { Spin } from 'antd';
 import { Suspense, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
@@ -48,11 +49,11 @@ function App() {
   }, [token]);
 
   if (!router) {
-    return <div>Loading...</div>;
+    return <Spin> </Spin>;
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spin> </Spin>}>
       <RouterProvider router={router} />
     </Suspense>
   );

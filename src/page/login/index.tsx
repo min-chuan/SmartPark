@@ -25,10 +25,13 @@ function Login() {
       })
       .then(res => {
         setLoading(false);
-        const { token, username } = res.data;
-        dispatch(setToken(token));
-        sessionStorage.setItem('username', username);
-        navigate('/', { replace: true });
+        if (res.data) {
+          const { token, username, btnAuth } = res.data;
+          dispatch(setToken(token));
+          sessionStorage.setItem('username', username);
+          sessionStorage.setItem('btnAuth', JSON.stringify(btnAuth));
+          navigate('/', { replace: true });
+        }
       })
       .catch(err => {
         setLoading(false);

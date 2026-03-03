@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getAccountList, type AccountData, type MenuItem } from '../../api/users';
 import useDataList from '../../hooks/useDataList';
+import Permission from '../../utils/Permission';
 import './index.scss';
 
 interface FormData {
@@ -204,9 +205,11 @@ function Settings() {
             <Button type="primary" size="small" className="mr" onClick={() => handleEdit(record)}>
               修改权限
             </Button>
-            <Button type="primary" danger size="small">
-              删除账号
-            </Button>
+            <Permission permission={['delete']}>
+              <Button type="primary" danger size="small">
+                删除账号
+              </Button>
+            </Permission>
           </>
         );
       },

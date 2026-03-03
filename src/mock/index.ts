@@ -12,7 +12,7 @@ Mock.Random.extend({
   },
 });
 
-export const adminMenuList = [
+const adminMenuList = [
   {
     icon: 'DashboardOutlined',
     label: '工作台',
@@ -394,6 +394,7 @@ Mock.mock(`${baseURL}/login`, 'post', options => {
       data: {
         username: 'admin',
         token: 'mocktokenadmin123456',
+        btnAuth: ['add', 'edit', 'delete'],
       },
     };
   } else if (username === 'manager' && password === 'manager123456') {
@@ -403,6 +404,7 @@ Mock.mock(`${baseURL}/login`, 'post', options => {
       data: {
         username: 'manager',
         token: 'mocktokenmanager123456',
+        btnAuth: ['add', 'edit'],
       },
     };
   } else if (username === 'user' && password === 'user123456') {
@@ -412,6 +414,7 @@ Mock.mock(`${baseURL}/login`, 'post', options => {
       data: {
         username: 'user',
         token: 'mocktokenuser123456',
+        btnAuth: ['add'],
       },
     };
   } else {

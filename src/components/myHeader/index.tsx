@@ -27,7 +27,7 @@ const MyHeader: React.FC = () => {
       navigate('/personal');
     } else if (key === '2') {
       dispatch(clearToken());
-      sessionStorage.removeItem('username');
+      sessionStorage.clear();
     }
   }
 

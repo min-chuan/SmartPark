@@ -6,6 +6,14 @@ interface LoginData {
   password: string;
 }
 
+export type BtnAuthType = 'add' | 'edit' | 'delete';
+
+export interface LoginResponse {
+  username: string;
+  token: string;
+  btnAuth: BtnAuthType[];
+}
+
 // API 返回的菜单项数据结构
 export interface MenuItem {
   icon?: string;
@@ -15,7 +23,7 @@ export interface MenuItem {
   children?: MenuItem[];
 }
 
-export function login(data: LoginData) {
+export function login(data: LoginData): Promise<ApiResponse<LoginResponse>> {
   return post('/login', data);
 }
 
