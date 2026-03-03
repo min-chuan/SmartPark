@@ -22,3 +22,24 @@ export function login(data: LoginData) {
 export function getMenu(): Promise<ApiResponse<MenuItem[]>> {
   return get('/menu');
 }
+
+export interface AccountData {
+  id: number;
+  accountName: string;
+  auth: string;
+  person: string;
+  tel: string;
+  department: string;
+  menu: MenuItem[];
+}
+
+export interface GetAccountListResp {
+  list: AccountData[];
+  total: number;
+}
+
+export function getAccountList(data: {
+  accountName: string;
+}): Promise<ApiResponse<GetAccountListResp>> {
+  return post('/getAccountList', data);
+}

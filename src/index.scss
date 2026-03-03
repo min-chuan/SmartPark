@@ -43,6 +43,18 @@
   text-align: right;
 }
 
+.flex {
+  display: flex;
+}
+
+.jcc {
+  justify-content: center;
+}
+
+.jce {
+  justify-content: end;
+}
+
 .search {
   .ant-col {
     display: flex;

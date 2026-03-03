@@ -12,7 +12,7 @@ Mock.Random.extend({
   },
 });
 
-const adminMenuList = [
+export const adminMenuList = [
   {
     icon: 'DashboardOutlined',
     label: '工作台',
@@ -292,6 +292,58 @@ const managerMenuList = [
     icon: 'SettingOutlined',
     label: '系统设置',
     key: '/settings',
+  },
+  {
+    icon: 'UserOutlined',
+    label: '个人中心',
+    key: '/personal',
+  },
+];
+
+const customizeMenuList = [
+  {
+    icon: 'DashboardOutlined',
+    label: '工作台',
+    key: '/dashboard',
+  },
+  {
+    icon: 'TeamOutlined',
+    label: '租户管理',
+    key: '/users',
+    children: [
+      {
+        icon: 'UnorderedListOutlined',
+        label: '租户列表',
+        key: '/users/list',
+      },
+    ],
+  },
+  {
+    icon: 'LaptopOutlined',
+    label: '物业管理',
+    key: '/estate',
+    children: [
+      {
+        icon: 'InsertRowLeftOutlined',
+        label: '楼宇管理',
+        key: '/estate/tenement',
+      },
+    ],
+  },
+  {
+    icon: 'ToolOutlined',
+    label: '报修管理',
+    key: '/repair',
+  },
+  {
+    icon: 'ToolOutlined',
+    label: '设备管理',
+    key: '/equipment',
+  },
+  {
+    icon: 'ThunderboltOutlined',
+    label: '能源消耗',
+    key: '/energy',
   },
   {
     icon: 'UserOutlined',
@@ -588,5 +640,66 @@ Mock.mock(`${baseURL}/getEquipmentList`, 'post', (options: any) => {
       total: 66,
     }),
     // 生成66条数据
+  };
+});
+
+/* -----------------  系统设置接口 ---------------------*/
+// 账号管理
+Mock.mock(`${baseURL}/getAccountList`, 'post', (options: any) => {
+  const res = JSON.parse(options.body);
+  console.log('账号管理请求参数', res);
+  return {
+    code: 200,
+    message: '成功',
+    data: {
+      list: [
+        {
+          id: 1001,
+          accountName: 'xuchao',
+          auth: 'admin',
+          person: '徐超',
+          tel: '18888888888',
+          department: '总裁办',
+          menu: adminMenuList,
+        },
+        {
+          id: 1002,
+          accountName: 'user01',
+          auth: 'user',
+          person: '王丽丽',
+          tel: '17777777777',
+          department: '网推部',
+          menu: userMenuList,
+        },
+        {
+          id: 1003,
+          accountName: 'manager01',
+          auth: 'manager',
+          person: '刘伟',
+          tel: '16666666666',
+          department: '财务部',
+          menu: managerMenuList,
+        },
+        {
+          id: 1004,
+          accountName: 'user02',
+          auth: 'customize',
+          person: '张安定',
+          tel: '15555555555',
+          department: '企划部',
+          menu: customizeMenuList,
+        },
+        {
+          id: 1005,
+          accountName: 'laowang',
+          auth: 'user',
+          person: '王大大',
+          tel: '14444444444',
+          department: '总裁办',
+          menu: userMenuList,
+        },
+      ],
+      total: 5,
+    },
   };
 });
