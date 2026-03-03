@@ -14,7 +14,7 @@ const columns: TableProps<DataType>['columns'] = [
   {
     title: 'No.',
     key: 'index',
-    render: (text, record, index) => index + 1,
+    render: (_text, _record, index) => index + 1,
   },
   {
     title: '维修单号',
@@ -64,7 +64,7 @@ const columns: TableProps<DataType>['columns'] = [
     title: '操作',
     dataIndex: 'operate',
     key: 'operate',
-    render: (text, record) => {
+    render: (_text, record) => {
       if (record.status == '1') {
         return (
           <>

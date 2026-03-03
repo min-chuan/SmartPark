@@ -5,7 +5,7 @@ const columns: any = [
   {
     title: 'No.',
     key: 'index',
-    render: (text: any, record: any, index: any) => index + 1,
+    render: (_text: any, _record: any, index: any) => index + 1,
   },
   {
     title: '企业名称',

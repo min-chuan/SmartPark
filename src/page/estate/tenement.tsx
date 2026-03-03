@@ -15,7 +15,7 @@ const columns: TableProps<DataType>['columns'] = [
   {
     title: 'No.',
     key: 'index',
-    render: (value, record, index) => index + 1,
+    render: (_value, _record, index) => index + 1,
   },
   {
     title: '楼宇名称',

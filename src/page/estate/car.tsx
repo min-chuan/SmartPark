@@ -26,7 +26,7 @@ const columns: TableProps<DataType>['columns'] = [
   {
     title: 'No.',
     key: 'index',
-    render: (text, record, index) => index + 1,
+    render: (_text, _record, index) => index + 1,
   },
   {
     title: '订单编号',
@@ -179,7 +179,7 @@ const columns2: TableProps<DataType2>['columns'] = [
   {
     title: 'No.',
     key: 'index',
-    render: (text, record, index) => index + 1,
+    render: (_text, _record, index) => index + 1,
   },
   {
     title: '车牌号',
