@@ -1,0 +1,10 @@
+.settings {
+  .account-list {
+    .ant-card-body::after {
+      content: '';
+      display: block;
+      height: 0;
+      clear: both;
+    }
+  }
+}
